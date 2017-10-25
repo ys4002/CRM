@@ -1,0 +1,56 @@
+{% extends "header.html"%}
+{% load staticfiles %}
+{% block title %}
+            Agent Info
+			   {% endblock %}
+
+{% block photo %}
+
+<img src="{% static 'image/crm.jpg' %}" height="200px" width="250px">
+			  {% endblock %}
+{% block content %}
+{%  if request.user.is_superuser %}
+{% if zip %}
+        <table class="table table-bordered">
+  <thead class="thead-inverse">
+
+    <tr>
+        <th> Name </th>
+        <th> username </th>
+        <th> Email </th>
+        <th> Staff Status </th>
+        <th> Active Status </th>
+        <th> Phone No. </th>
+        <th> Bio </th>
+        <th> Location </th>
+        <th> Birth Date </th>
+        <th> Company Name </th>
+    </tr>
+  </thead>
+{% for c,d in zip %}
+   <tbody>
+             <tr>
+                 <td><a href="/{{d.id}}/update/"> {{d.first_name}} {{d.last_name}}</a></td>
+            <td>{{d.username}}</td>
+            <td>{{d.email}}</td>
+            <td>{{d.is_staff}}</td>
+            <td>{{d.is_active}}</td>
+            <td>{{c.contact_no}}</td>
+            <td>{{c.bio}}</td>
+            <td>{{c.location}}</td>
+            <td>{{c.birth_date}}</td>
+            <td>{% if comp %}
+                {% for a in comp %}
+                {% if d.id == a.Agents.user.id %}
+                {{a.company}}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+            </td>
+            </tr>
+             </tbody>
+{% endfor %}
+{% endif %}
+            {% endif %}
+{% endblock %}

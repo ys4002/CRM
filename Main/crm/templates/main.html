@@ -1,0 +1,37 @@
+{% extends "header.html"%}
+{% load staticfiles %}
+{% block title %}
+        CRM
+			   {% endblock %}
+
+
+{% block photo %}
+<img src="{% static 'image/crm.jpg' %}" height="150px" width="200px">
+
+			  {% endblock %}
+{% block message %}
+{% if messages %}
+  {% for message in messages %}
+    {% if 'error' in message.tags %}
+        <div class="alert alert-danger">
+            {{ message }}
+
+
+        </div>
+    {% endif %}
+{% endfor %}
+{% endif %}
+{% if messages %}
+  {% for message in messages %}
+    {% if 'success' in message.tags %}
+        <div class="alert alert-success">
+            {{ message }}
+
+        </div>
+    {% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block content %}
+
+{% endblock %}

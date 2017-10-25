@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<entries>
+    {% for entry in ag %}
+    <entry><br>{{ entry.id }}</br></entry>
+    <entry><br>{{ entry.bio }}</br></entry>
+    <entry><br>{{ entry.location }}</br></entry>
+    <entry><br>{{ entry.birth_date }}</br></entry>
+    {% endfor %}
+</entries>

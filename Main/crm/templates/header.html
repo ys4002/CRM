@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>{% block title %}
+			   {% endblock %}</title>
+	<meta charset="utf-8" />
+	{% load staticfiles %}
+
+	<link rel="stylesheet" href="{% static 'style/css/bootstrap.min.css' %}" type = "text/css"/>
+    <!--<script src="{% static 'ba/js/jquery.min.js' %}"></script>-->
+    <!--<script src="{% static 'ba/js/bootstrap.min.js' %}" ></script>-->
+
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+	{% block head %}
+			   {% endblock %}
+	<style type="text/css">
+
+
+
+		body {
+		  height:100%
+		}
+	</style>
+</head>
+
+<body class="body" style="background-color:#f6f6f6">
+<div class="container-fluid" style="min-height:95%; ">
+
+					<div class="row">
+
+		  <div class="col-sm-3">
+
+
+		{% block photo %}
+			  {% endblock %}
+			 <!--well bs-sidebar affix-->
+		  </div> <!--col-sm-2-->
+
+
+		  <div class="col-sm-9">
+
+			<div class='container-fluid'>
+			<br><br>
+<center>
+					<h1>Customer relationship management (CRM)</h1>
+						</center>
+			</div>
+		  </div>
+
+					</div>
+
+
+
+
+
+<br>
+
+		   <!-- Great, til you resize. -->
+			<!--<div class="well bs-sidebar affix" id="sidebar" style="background-color:#fff">-->
+			<div class="well bs-sidebar" id="sidebar" style="background-color:#fff">
+
+				  {% if request.user.is_superuser %}
+
+				  <nav class="navbar navbar-default">
+					  <div class="container-fluid">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+								<a class="navbar-brand" href="/home/">Welcome, {{request.user.first_name}}</a>
+						</div>
+
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						  <ul class="nav navbar-nav">
+
+
+							  <li><a href="/request/">Requests</a></li>
+
+							  <li><a href="/aginfo/">Agent Info</a></li>
+
+
+						  </ul>
+
+						  <ul class="nav navbar-nav navbar-right">
+							<li><a href="/agent/">Update Profile</a></li>
+							  <li><a href="/logout/">logout</a></li>
+
+							  </ul>
+							</li>
+						  </ul>
+						</div><!-- /.navbar-collapse -->
+					  </div><!-- /.container-fluid -->
+					</nav>
+
+				  {% elif request.user.is_staff %}
+
+				  <nav class="navbar navbar-default">
+					  <div class="container-fluid">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+								<a class="navbar-brand" href="/home/">Welcome, {{request.user.first_name}}</a>
+						</div>
+
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						  <ul class="nav navbar-nav">
+							<li><a href="/addagent/">Add Agent</a></li>
+							 <li><a href="/add/">Add Customer</a></li>
+							  <li><a href="/cus/">Customer Info</a></li>
+							  <li><a href="/com/">Company</a></li>
+
+
+						  </ul>
+
+						  <ul class="nav navbar-nav navbar-right">
+							  							<li><a href="/agent/">Update Profile</a></li>
+
+							<li><a href="/logout/">logout</a></li>
+
+							  </ul>
+							</li>
+						  </ul>
+						</div><!-- /.navbar-collapse -->
+					  </div><!-- /.container-fluid -->
+					</nav>
+
+
+				  {% elif request.user.is_authenticated %}
+
+				  <nav class="navbar navbar-default">
+					  <div class="container-fluid">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+								<a class="navbar-brand" href="/home/">Welcome, {{request.user.first_name}}</a>
+						</div>
+
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						  <ul class="nav navbar-nav">
+							<li><a href="/cus/">Customer Info</a></li>
+							 <li><a href="/add/">Add Customer</a></li>
+
+						  </ul>
+
+						  <ul class="nav navbar-nav navbar-right">
+							  							<li><a href="/agent/">Update Profile</a></li>
+
+							<li><a href="/logout/">logout</a></li>
+
+							  </ul>
+							</li>
+						  </ul>
+						</div><!-- /.navbar-collapse -->
+					  </div><!-- /.container-fluid -->
+					</nav>
+				{% else %}
+				<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+            <a class="navbar-brand" href="#">Brand</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/register/">Register <span class="sr-only">(current)</span></a></li>
+        <li><a href="/login/">Login</a></li>
+
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">About</a></li>
+
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+				  {% endif %}
+{% block message %}
+{% endblock %}
+
+
+
+
+
+			   {% block content %}
+			   {% endblock %}
+
+
+				</div>
+		</div>
+	</div>
+
+</body>
+<footer>
+
+	<div class="navbar navbar-fixed-bottom">
+	<div class="container-fluid" style='margin-left:50px'>
+		<center>
+					<marquee><h6>Customer relationship management (CRM)</h6></marquee>
+						</center>
+	</div>
+	</div>
+</footer>
+</html>

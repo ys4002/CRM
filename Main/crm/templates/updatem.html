@@ -1,0 +1,33 @@
+{% extends "header.html"%}
+{% load crispy_forms_tags %}
+{% block title %}
+        Update Customer Agent
+			   {% endblock %}
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    <!--{{form|crispy}}-->
+
+    <div id="div_id_agen" class="form-group"> <label for="id_agen" class="control-label ">
+                Agen
+            </label> <div class="controls "> <select name="agen" class="select form-control" id="id_agen">
+        <option value="">---------</option>
+        {% if c and a %}
+{% for d in a %}
+{% for e in c %}
+{% if d.id == e.Agents.id %}
+<option value="{{d.id}}" >{{d.user.username}}</option>
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+        <!--<option value="1">yash</option>-->
+        <!--<option value="3" selected="">suyash</option>-->
+        <!--<option value="2">vishal</option>-->
+
+</select> </div> </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% endblock %}

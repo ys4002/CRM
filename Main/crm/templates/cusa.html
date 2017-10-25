@@ -1,0 +1,146 @@
+{% extends "header.html"%}
+{% load staticfiles %}
+{% block title %}
+            Customers
+			   {% endblock %}
+
+{% block photo %}
+    {% if b %}
+{% for b in b %}
+
+<img src="{{ b.company.Company_Image.url }}", alt="..."  width="200px" height="200px" >
+
+{% endfor %}
+{% else %}
+<img src="{% static 'image/crm.jpg' %}" height="150px" width="200px">
+
+{% endif %}
+			  {% endblock %}
+{% block content %}
+{% if request.user.is_superuser or request.user.is_staff %}
+{% if object_list %}
+
+
+
+        <table class="table table-bordered">
+  <thead class="thead-inverse">
+
+    <tr>
+        <th> Name </th>
+        <th> Avatar </th>
+        <th> Address </th>
+        <th> Phone No. </th>
+        <th> Email </th>
+        <th> Agent Log </th>
+        <th> Date Joined </th>
+        <th> Next Call Date </th>
+        <th> Agent Call Date </th>
+        <th> Agent Name </th>
+
+    </tr>
+  </thead>
+            {% for a in object_list %}
+             <tbody>
+             <tr>
+                 <td>{{a.first_name}} {{a.last_name}}<br>
+
+                 {% if request.user.is_staff %}
+
+                 <button type="submit"  class="btn btn-default btn-sm"><a href="/{{a.id}}/updatem/">Update</a></button>
+                 {% endif %}</td>
+            <td><img src="{{ a.avatar.url }}", alt="..." class="img-thumbnail" width="100px" ></td>
+            <td>{{a.address}}</td>
+            <td>{{a.phone}}</td>
+            <td>{{a.email}}</td>
+            <td><a href="/{{a.id}}/logs">Logs</a> </td>
+            <td>{{a.dj}}</td>
+            <td>{{a.dtc}}</td>
+            <td>{{a.dta}}</td>
+            <td>{% if rel %}
+
+                {% for f in rel%}
+
+
+                {% if a.id == f.cust.id %}
+                {{f.ag_nm}}
+
+                {% endif %}
+                {{ break }}
+                {% endfor%}
+                {% else %}
+                None
+                {% endif %}
+
+            </td>
+             </tr>
+             </tbody>
+    {% endfor %}
+    </table>
+<h5>Export Customers:</h5>
+<a href="/export/csv" ><img src="{% static 'image/CSV.png' %}" height="50px" width="50px"><a>  <a href="/export/xls" ><img src="{% static 'image/xls.png' %}" height="50px" width="50px"><a>  <a href="/export/pdf" ><img src="{% static 'image/pdf.png' %}" height="50px" width="50px"><a>
+
+{% endif %}
+    {% elif request.user.is_authenticated %}
+
+{% if object_list %}
+            <table class="table table-bordered">
+  <thead class="thead-inverse">
+
+    <tr>
+        <th> Name </th>
+        <th> Avatar </th>
+        <th> Address </th>
+        <th> Phone No. </th>
+        <th> Email </th>
+        <th> Agent Log </th>
+        <th> Date Joined </th>
+        <th> Next Call Date </th>
+        <th> Agent Call Date </th>
+        <th> Agent Name </th>
+
+    </tr>
+  </thead>
+{% for a in object_list %}
+{% for b in rel %}
+{% if b.cust.id == a.id and b.agen.user == request.user %}
+
+
+
+
+
+             <tbody>
+             <tr>
+        <td>{{a.first_name}} {{a.last_name}}<br>
+            <button type="submit"  class="btn btn-default btn-sm"><a href="/{{a.id}}/updateag/"> Update </a></button></td>
+            <td><img src="{{ a.avatar.url }}", alt="..." class="img-thumbnail" width="200px" height="150px" ></td>
+            <td>{{a.address}}</td>
+            <td>{{a.phone}}</td>
+            <td>{{a.email}}</td>
+            <td><a href="/{{a.id}}/logs">Logs</a></td>
+            <td>{{a.dj}}</td>
+            <td>{{a.dtc}}</td>
+            <td>{{a.dta}}</td>
+            <td>
+
+
+
+
+                {{b.ag_nm}}
+
+                </td>
+             </tr>
+             </tbody>
+{% endif %}
+{% endfor %}
+            {% endfor %}
+    </table>
+    <h5>Export Customers:</h5>
+<a href="/export/csv" ><img src="{% static 'image/csv.png' %}" height="50px" width="50px"><a>  <a href="/export/xls" ><img src="{% static 'image/xls.png' %}" height="50px" width="50px"><a>  <a href="/export/pdf" ><img src="{% static 'image/pdf.png' %}" height="50px" width="50px"><a>
+
+{% endif %}
+
+{% else %}
+<h1>you are not authenticated</h1>
+{% endif %}
+
+{% endblock %}

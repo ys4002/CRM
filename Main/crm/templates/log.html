@@ -1,0 +1,68 @@
+{% extends "header.html"%}
+{% load crispy_forms_tags %}
+{% block title %}
+        Logs
+      {% endblock %}
+{% block content %}
+    <center><h3>Name :{{object.first_name}} {{object.last_name}}</h3></center>
+    <center><h3>Avatar  : </h3><img src="{{ object.avatar.url }}", alt="..." class="img-thumbnail" width="200px" height="150px" ></center>
+    <center><h3>Phone No. :{{object.phone}}</h3></center>
+    <center><h3>Address  :{{object.address}}</h3></center>
+<center><h3>{% if request.user.is_staff and loghis %}
+                Relation History:{% if loghis %}
+                {% for l in loghis %}
+                {% if object.id == l.cus.id %}
+                {{l.log|linebreaks|safe}}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endif %}</h3></center>
+
+{% if logs %}
+
+
+        {% for log in logs %}
+        {% if log.cust.id == object.id %}
+<div class="row">
+  <div class="col-md-1"><img src="{{ log.agent.avatar.url }}", alt="..." class="img-thumbnail" width="70px" height="50px" ><figcaption>{{log.agent.user.username}}</figcaption>
+</div>
+  <div class="col-md-9"><h3>{{log.data|linebreaks|safe}}</h3><h6>on {{log.date}}</h6></div>
+
+
+</div>
+ <br>
+
+        {% endif %}
+        {% endfor %}
+
+
+{% endif %}
+
+{% if rel %}
+{% if request.user.is_staff %}
+<form action="" method="post">
+    {% csrf_token %}
+    <!--{{form|crispy}}-->
+    <div id="div_id_data" class="form-group"> <label for="id_data" class="control-label ">
+                Enter Log
+            </label> <div class="controls "> <textarea name="data" placeholder="Write Log" cols="5" rows="5" class="textarea form-control" id="id_data"></textarea> </div> </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% else %}
+{% for a in rel %}
+{% if request.user.first_name == a.agen.user.first_name and a.cust.id == object.id %}
+ <!--<br><button type="submit"  class="btn btn-default btn-sm"><a href="/{{object.id}}/addlog/"> _Add Logs_ </a></button></td>-->
+<form action="" method="post">
+    {% csrf_token %}
+    <!--{{form|crispy}}-->
+    <div id="div_id_data" class="form-group"> <label for="id_data" class="control-label ">
+                Enter Log
+            </label> <div class="controls "> <textarea name="data" placeholder="Write Log" cols="5" rows="5" class="textarea form-control" id="id_data"></textarea> </div> </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% endif %}
+
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endblock %}

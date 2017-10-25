@@ -1,0 +1,54 @@
+{% extends "header.html"%}
+{% load staticfiles %}
+{% block title %}
+        Home Page
+			   {% endblock %}
+
+{% block photo %}
+    {% if b %}
+{% for b in b %}
+
+<img src="{{ b.company.Company_Image.url }}" alt="..."  width="200px" height="200px" >
+{% endfor %}
+{% else %}
+<img src="{% static 'image/crm.jpg' %}" height="150px" width="200px">
+
+{% endif %}
+			  {% endblock %}
+
+{% block message %}
+{% if messages %}
+  {% for message in messages %}
+    {% if 'error' in message.tags %}
+        <div class="alert alert-danger">
+            {{ message }}
+
+            <a href="/importx/" ><button type="submit" class="btn btn-danger">Try Again?</button></a>
+        </div>
+    {% endif %}
+{% endfor %}
+{% endif %}
+{% if messages %}
+  {% for message in messages %}
+    {% if 'success' in message.tags %}
+        <div class="alert alert-success">
+            {{ message }}
+
+        </div>
+    {% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block content %}
+
+<h2>Name: {{user.first_name}} {{user.last_name}}</h2>
+{% for b in objects_list %}
+{% if request.user == b.user %}
+<h3>Avatar: <img src="{{ b.avatar.url }}", alt="..." class="img-thumbnail" width="100px" ></h3>
+<h3>Bio: {{b.bio|safe}}</h3>
+<h3>Location: {{b.location}}</h3>
+<h3>Birth Date: {{b.birth_date}}</h3>
+{% endif %}
+{% endfor %}
+
+{% endblock %}

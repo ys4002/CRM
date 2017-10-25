@@ -1,0 +1,43 @@
+{% extends "header.html"%}
+{% load staticfiles %}
+
+{% load crispy_forms_tags %}
+{% block title %}
+        Registration
+			   {% endblock %}
+{% block photo %}
+    {% if b %}
+{% for b in b %}
+
+<img src="{{ b.company.Company_Image.url }}", alt="..."  width="200px" height="200px" >
+{% endfor %}
+{% else %}
+<img src="{% static 'image/crm.jpg' %}" height="150px" width="200px">
+
+{% endif %}
+			  {% endblock %}
+{% block content %}
+
+<div class='container-fluid'>
+     <br><br>
+                <div class="well bs-sidebar" id="sidebar" style="background-color:#f6f6f6">
+                    <div class="nav nav-pills nav-stacked">
+                        <ul>
+
+
+
+
+                                <form name="myform" action="" method="post" enctype="multipart/form-data" onsubmit="return validateform()">
+                                {% csrf_token %}
+                                {{form|crispy}}
+                                    {{form1|crispy}}
+
+                                <button type="submit" class="btn btn-default">Submit</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+</div>
+
+{% endblock %}
